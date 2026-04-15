@@ -15,17 +15,14 @@ function Dashboard() {
 
   // ✅ PAGINATION STATES
   const [currentPage, setCurrentPage] = useState(1);
-  
-
+  useEffect(() => {
   const fetchData = async () => {
     try {
       setLoading(true);
       const res = await axios.get(
-  `https://Suganya1.pythonanywhere.com/api/data?search=${search}&category=${category}&minAmount=${minAmount}&page=${currentPage}&per_page=5`
-);
-  
-
-      setData(res.data.data);;
+        `https://Suganya1.pythonanywhere.com/api/data?search=${search}&category=${category}&minAmount=${minAmount}&page=${currentPage}&per_page=5`
+      );
+      setData(res.data.data);
       setLoading(false);
     } catch (err) {
       setError("Error fetching data");
@@ -33,18 +30,15 @@ function Dashboard() {
     }
   };
 
-  useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const res = await axios.get("http://127.0.0.1:5000/api/data");
-      setData(res.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   fetchData();
-}, []);
+}, [search, category, minAmount, currentPage]);
+
+
+
+
+
+
+
 
   
   const total = data.reduce((sum, item) => sum + item.amount, 0);
