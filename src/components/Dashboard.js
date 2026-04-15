@@ -15,7 +15,7 @@ function Dashboard() {
 
   // ✅ PAGINATION STATES
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3;
+  
 
   const fetchData = async () => {
     try {
@@ -34,8 +34,17 @@ function Dashboard() {
   };
 
   useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const res = await axios.get("http://127.0.0.1:5000/api/data");
+      setData(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   fetchData();
-}, [search, category, minAmount, currentPage]);
+}, []);
 
   
   const total = data.reduce((sum, item) => sum + item.amount, 0);
